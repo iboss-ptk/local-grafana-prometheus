@@ -1,0 +1,26 @@
+services:
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    networks:
+      - monitor
+  grafana:
+    image: grafana/grafana-enterprise
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+    networks:
+      - monitor
+
+networks:
+  monitor:
+    driver: bridge
+
+volumes:
+  prometheus_data:
+  grafana_data:
